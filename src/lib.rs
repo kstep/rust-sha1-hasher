@@ -171,7 +171,7 @@ impl Sha1 {
         #![allow(unused_must_use)]
 
         let mut m = Sha1 {
-            state: self.state.clone(),
+            state: self.state,
             data: Vec::new(),
             len: 0,
         };
