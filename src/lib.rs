@@ -30,6 +30,7 @@ use std::num::Int;
 use std::num::wrapping::WrappingOps;
 use std::default::Default;
 use std::mem::transmute;
+use std::iter::range;
 
 /// Represents a Sha1 hash object in memory.
 #[derive(Clone)]
