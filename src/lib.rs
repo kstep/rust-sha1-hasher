@@ -30,7 +30,6 @@ use std::num::Int;
 use std::num::wrapping::WrappingOps;
 use std::default::Default;
 use std::mem::transmute;
-use std::iter::range;
 
 /// Represents a Sha1 hash object in memory.
 #[derive(Clone)]
@@ -42,7 +41,6 @@ pub struct Sha1 {
 
 const DEFAULT_STATE : [u32; 5] =
     [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
-
 
 fn to_hex(input: &[u8]) -> String {
     let mut s = String::new();
@@ -123,7 +121,7 @@ impl Sha1 {
         fn hh(b: u32, c: u32, d: u32) -> u32 { (b & c) | (d & (b | c)) }
         fn ii(b: u32, c: u32, d: u32) -> u32 { b ^ c ^ d }
 
-        for i in range(16, 80) {
+        for i in (16..80) {
             let n = words[i - 3] ^ words[i - 8] ^ words[i - 14] ^ words[i - 16];
             words[i] = n.rotate_left(1);
         }
@@ -134,7 +132,7 @@ impl Sha1 {
         let mut d = self.state[3];
         let mut e = self.state[4];
 
-        for i in range(0, 80) {
+        for i in (0..80) {
             let (f, k) = match i {
                 0 ... 19 => (ff(b, c, d), 0x5a827999),
                 20 ... 39 => (gg(b, c, d), 0x6ed9eba1),
@@ -179,7 +177,7 @@ impl Sha1 {
         w.push_all(&*self.data);
         w.push_all(&[0x80u8]);
         let padding = 64 - ((self.data.len() + 9) % 64);
-        for _ in range(0, padding) {
+        for _ in (0..padding) {
             w.push(0u8);
         }
         w.push_all(unsafe { &transmute::<_, [u8; 8]>(((self.data.len() as u64 + self.len) * 8).to_be()) });
@@ -255,7 +253,7 @@ mod tests {
         b.bytes = n * s.len() as u64;
         b.iter(|| {
             m.reset();
-            for _ in range(0, n) {
+            for _ in (0..n) {
                 m.write_all(s.as_bytes()).unwrap();
             }
             assert_eq!(m.hexdigest(), "7ca27655f67fceaa78ed2e645a81c7f1d6e249d2");
