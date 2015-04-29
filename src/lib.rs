@@ -3,7 +3,7 @@
 //! Example:
 //!
 //! ```rust
-//! extern crate "sha1-hasher" as sha1;
+//! extern crate sha1_hasher as sha1;
 //! use std::io::Write;
 //!
 //! # fn main() {
@@ -26,8 +26,6 @@
 
 use std::io::{Write, BufWriter};
 use std::io::Result as IoResult;
-use std::num::Int;
-use std::num::wrapping::WrappingOps;
 use std::default::Default;
 use std::mem::transmute;
 
